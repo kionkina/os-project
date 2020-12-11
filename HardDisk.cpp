@@ -73,10 +73,10 @@ void HardDisk::showBusy(){
         std::set<long long int> processes = currDisk->getProcesses();
 
         // Print disknum and current head
-        std::cout << "Disk " << diskNum << ": " << "Reads: " << currDisk->getHead() << " Serves: ";
+        std::cout << "Disk " << diskNum << ": " << "Reads: " << currDisk->getHead() << " Serves:";
 
         for (auto process = processes.begin(); process != processes.end(); ++process) {
-            std::cout << ' ' << *process;   
+            std::cout << ' ' <<"P" << *process;   
         };
         //Increment the iterator
 

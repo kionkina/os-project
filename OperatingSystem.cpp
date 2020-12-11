@@ -257,10 +257,10 @@ void OperatingSystem::terminate() {
 
 void OperatingSystem::showCPUInfo() {
     if (currentProcess != NULL) {
-        cout << "CPU: " << currentProcess->getPID() << endl;
+        cout << "CPU: " << "P" << currentProcess->getPID() << endl;
         RQ->print();
     } else {
-        cout << "CPU: Empty" << endl;
+        cout << "CPU: Idle" << endl;
         RQ->print();
     }
 
