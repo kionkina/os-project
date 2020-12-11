@@ -1,3 +1,4 @@
+//Karina Ionkina
 #ifndef READYQUEUE_H
 #define READYQUEUE_H
 
@@ -17,7 +18,6 @@ class ReadyQueue {
     private:   
       Node *head;
 
-    
     public:
       ReadyQueue();
       void insert(PCB *process);

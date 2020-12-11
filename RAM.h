@@ -1,3 +1,4 @@
+//Karina Ionkina
 #ifndef RAM_H
 #define RAM_H
 #include "PCB.h"
@@ -16,10 +17,6 @@ class RAM {
         long long int totalMem;
         std::vector<PCB*> blocks;
         long long int currSize;
-
-
-
-
 };
 
 

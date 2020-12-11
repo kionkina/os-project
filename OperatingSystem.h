@@ -1,3 +1,4 @@
+//Karina Ionkina
 #ifndef OPERATINGSYSTEM_H
 #define OPERATINGSYSTEM_H
 

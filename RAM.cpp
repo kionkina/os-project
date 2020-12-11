@@ -1,3 +1,4 @@
+//Karina Ionkina
 #include "RAM.h"
 #include <vector>
 #include <iostream>

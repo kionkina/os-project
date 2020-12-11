@@ -1,3 +1,4 @@
+//Karina Ionkina
 #include "ReadyQueue.h"
 #include <iostream>
 

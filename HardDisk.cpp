@@ -1,3 +1,4 @@
+//Karina Ionkina
 #include "HardDisk.h"
 #include <vector>
 #include <iostream>

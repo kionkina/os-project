@@ -1,3 +1,4 @@
+//Karina Ionkina
 #include "Disk.h"
 #include <iostream>
 #include <set>
@@ -15,7 +16,7 @@ requestInfo Disk::popCurrent() {
         requestInfo temp = {-1, -1};
         return temp;
     }
-    requestInfo retPair = diskQueue[head];
+    requestInfo retPair = diskQueue.at(head);
 
     //Remove element from queue
     diskQueue.erase(diskQueue.begin()+head);
@@ -24,7 +25,7 @@ requestInfo Disk::popCurrent() {
 
 void Disk::moveHead() {
     if (diskQueue.empty()){
-        std::cout << "no more requests. staying in place" << std::endl;
+        //std::cout << "no more requests. staying in place" << std::endl;
         return;
     }
 

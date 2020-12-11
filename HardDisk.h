@@ -1,3 +1,4 @@
+//Karina Ionkina
 #ifndef HARD_DISK_H
 #define HARD_DISK_H
 
