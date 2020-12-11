@@ -1,6 +1,6 @@
-CC=g++-10
+CC=g++
 
-CFLAGS= -c -Wall
+CFLAGS= -c
 objects: main.o OperatingSystem.o PCB.o ReadyQueue.o Disk.o HardDisk.o RAM.o
 
 prog: main.o OperatingSystem.o PCB.o ReadyQueue.o Disk.o HardDisk.o RAM.o
