@@ -81,14 +81,14 @@ PCB* ReadyQueue::getFront() {
 
 void ReadyQueue::print() {
     Node *temp = head;
+    std::cout << "Ready-queue:";
     if (temp == NULL) {
-        std::cout << "No other processes waiting" << std::endl;
+        std::cout << " Empty" << std::endl;
         return;
     }
 
-    std::cout << "(PID, Priority): ";
     while (temp != NULL) {
-        std::cout << " (" << temp->process->getPID() << ", " << temp->process->getPriority() << ") ";
+        std::cout << " P" << temp->process->getPID();
         temp = temp->next;
     }
 

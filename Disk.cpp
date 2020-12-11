@@ -1,5 +1,6 @@
 #include "Disk.h"
 #include <iostream>
+#include <set>
 #include <climits>
 
 Disk::Disk() : head(0), val(0) { };
@@ -15,7 +16,6 @@ requestInfo Disk::popCurrent() {
         return temp;
     }
     requestInfo retPair = diskQueue[head];
-    std::cout << "reading" << retPair.track << std::endl;
 
     // remove element from queue
     diskQueue.erase(diskQueue.begin()+head);
@@ -30,7 +30,7 @@ void Disk::moveHead() {
 
     int minDiff = INT_MAX;
     int newHeadPos = head;
-    for (int i=0; i < diskQueue.size(); i++){
+    for (size_t i=0; i < diskQueue.size(); i++){
         int currDiff= getDistance(diskQueue.at(i).track);
         if (currDiff < minDiff) {
             minDiff = currDiff;
@@ -39,8 +39,6 @@ void Disk::moveHead() {
     }
     val = diskQueue.at(newHeadPos).track;
     head = newHeadPos;
-    std::cout << "moved head to " << newHeadPos << std::endl;
-    std::cout << "new val is " << val << std::endl;
 };
 
 int Disk::getDistance(int cylinder){
@@ -49,4 +47,17 @@ int Disk::getDistance(int cylinder){
 
 bool Disk::isIdle() {
     return diskQueue.empty();
+}
+
+int Disk::getHead() {
+    return head;
+} 
+
+std::set<long long int> Disk::getProcesses(){
+    std::set<long long int> processes = {};
+    for (requestInfo request: diskQueue) {
+        processes.insert(request.pid);
+    }
+
+    return processes;
 }

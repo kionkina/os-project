@@ -30,7 +30,13 @@ void OperatingSystem::getData(std::string prompt, long long int& variable) {
             // if input is not a valid num, the exception will be ~caught~
             // stoll for discards whitespaces
             // if input includes a letter, only the numbers preceding it will count
-            variable = stoll(input);
+            if (stoll(input) < 4000000001) {
+                variable = stoll(input);
+            }
+            else {
+                std::cout << "Too large. Try again" << std::endl;
+                return getData(prompt, variable);
+            }
             return;
         } catch(const std::exception& e) {
             std::cout << "Enter a valid number pls." << std::endl;
@@ -72,9 +78,9 @@ void OperatingSystem::listen() {
                 case 'd':
                 {
                     // only add if there is a process using CPU
-                    if (!currentProcess == NULL) {
+                    if (currentProcess) {
                         std::vector<requestInfo> cylinders;
-                        for(int i=2; i < curr_inputs.size(); i++){
+                        for(size_t i=2; i < curr_inputs.size(); i++){
                             requestInfo input;
                             input.pid = currentProcess->getPID();
                             input.track = stoll(curr_inputs.at(i));
@@ -96,7 +102,6 @@ void OperatingSystem::listen() {
                     std::string secondInput = curr_inputs.at(1);
                     if (secondInput == "r")
                     {
-                        cout << "running show cpu info " << endl;
                         showCPUInfo();
                     }
                     else if (secondInput == "i" )
@@ -135,9 +140,15 @@ void OperatingSystem::listen() {
 };
 
 void OperatingSystem::createNewProcess(const long long int &priority, const long long int &size) {
+
     PCB *newProcess = new PCB(PIDCtr, priority, size);
-    PIDCtr++;
-    insertProcess(newProcess);
+    if( memory->insert(newProcess)){
+        PIDCtr++;
+        insertProcess(newProcess);
+    }
+    else {
+        std::cout << "Cannot insert. No space left in RAM." << std::endl;
+    }
     return;
 };
 
@@ -161,13 +172,9 @@ void OperatingSystem::insertProcess(PCB* process) {
             currentProcess = process;
             process->setState(Running);
         }
-
-    memory->insert(process); 
-    std::cout << "Added process with pid " << process->getPID() << std::endl;
 }
 
 void OperatingSystem::enqueueCylinders(const long long int &diskNum,  const std::vector<requestInfo> &cylinders) {
-    cout << "in RC: " << "disk: " << diskNum << endl;
     if (diskNum > hardDisk->getNumDisks()-1 || cylinders.empty()) {
         std::cout << "Invalid disk num or empty list" << std::endl;
         return;
@@ -194,7 +201,6 @@ void OperatingSystem::enqueueCylinders(const long long int &diskNum,  const std:
 };
 
 void OperatingSystem::finishReading(const long long int &diskNum) {
-    cout << "in finishReading: " << diskNum << endl;
     if (diskNum > hardDisk->getNumDisks()-1) {
         std::cout << "Invalid disk num" << std::endl;
         return;
@@ -210,14 +216,13 @@ void OperatingSystem::finishReading(const long long int &diskNum) {
    
     // Finish reading track, update PCB
     PCB *process = waitingProcesses[terminated.pid];
-    std::cout << "removing waiting from process... " << std::endl;
     process->removeWaiting(diskNum, terminated.track);
     
     if (process->doneWaiting()) {
         waitingProcesses.erase(terminated.pid);
         
         insertProcess(process);
-        std::cout << "removed " << terminated.pid << " from waiting process";
+        //std::cout << "removed " << terminated.pid << " from waiting process";
     }
 
 
@@ -252,10 +257,11 @@ void OperatingSystem::terminate() {
 
 void OperatingSystem::showCPUInfo() {
     if (currentProcess != NULL) {
-        cout << "Current process PID: " << currentProcess->getPID() << endl;
+        cout << "CPU: " << currentProcess->getPID() << endl;
         RQ->print();
     } else {
-        cout << "No process is running" << endl;
+        cout << "CPU: Empty" << endl;
+        RQ->print();
     }
 
 };

@@ -15,7 +15,6 @@ bool RAM::insert(PCB* process) {
 
     //RAM has no room for process of this size
     if (currSize + pSize > totalMem) {
-        std::cout << "1" << std::endl;
         return false;
     }
 
@@ -32,7 +31,6 @@ bool RAM::insert(PCB* process) {
 
     PCB* currProcess = blocks.at(0);
     ramInfo prevBlock = currProcess->getRamInfo();
-    std::cout << "3" << std::endl;
     
     //using iterators because vector insert pos is of type it
     for (std::vector<PCB*>::iterator it =blocks.begin() + 1; it != blocks.end(); it++) {
@@ -52,35 +50,33 @@ bool RAM::insert(PCB* process) {
 
     //at this point prevBlock = last block
     if (totalMem - prevBlock.endPos >= pSize) {
-        std::cout << "4" << std::endl;
         ramInfo newBlock = {prevBlock.endPos + 1, prevBlock.endPos + pSize};
         process->setRamInfo(newBlock);
         blocks.push_back(process);
         currSize += pSize;
         return true;
     }
-
+    return false;
 }
 
 void RAM::remove(const long long int& pid) {
-    for (std::vector<PCB*>::iterator it = blocks.begin() + 1; it != blocks.end(); it++) {
+    for (std::vector<PCB*>::iterator it = blocks.begin(); it != blocks.end(); it++) {
         if ((*it)->getPID() == pid) {
-            std::cout << "found process in blocks, about to remove..." << std::endl;
+            currSize -= (*it)->getSize();
             blocks.erase(it);
             return;
         }
-        else {
-            std::cout << "process not found" << std::endl;
-            return;
-        }
     }
+
+    std::cout << "Process not found on remove" << std::endl;
+    return;
 }
 
 void RAM::print() {
     std::cout <<"RAM usage: " << std::endl;
     for (PCB* block: blocks) {
         ramInfo currInfo = block->getRamInfo();
-        std::cout << currInfo.startPos << " - " << currInfo.endPos << ": " << block->getPID() << std::endl;
+        std::cout << "P" << block->getPID() << " : " << currInfo.startPos << " - " << currInfo.endPos << std::endl;
     }
 
 

@@ -28,14 +28,14 @@ void PCB::setState(processState state) {
 void PCB::addWaiting(const long long int &diskNum, const std::vector<requestInfo> &cylinders){
     if (waitMap.find(diskNum) != waitMap.end()) {
         for (auto cylinder: cylinders) {
-            std::cout << "adding " << cylinder.track << "to set" << std::endl;
+            //std::cout << "adding " << cylinder.track << "to set" << std::endl;
             waitMap[diskNum].insert(cylinder.track);
         }
     }
     else {
         std::set<long long int> cylinderSet;
          for (auto cylinder: cylinders) {
-            std::cout << "adding" << cylinder.track << " to set " << std::endl;
+            //std::cout << "adding" << cylinder.track << " to set " << std::endl;
             cylinderSet.insert(cylinder.track);
         }
         waitMap[diskNum] = cylinderSet;
@@ -45,11 +45,9 @@ void PCB::addWaiting(const long long int &diskNum, const std::vector<requestInfo
 void PCB::removeWaiting(const long long int &diskNum, const long long int &cylinder) {
     //remove track and/or process
     if (waitMap.find(diskNum) != waitMap.end()) {
-        std::cout << "found process, about to erase" << std::endl;
         waitMap[diskNum].erase(cylinder);
         if (waitMap[diskNum].empty()) {
             waitMap.erase(diskNum);
-            std::cout << "Removed disk from process" << PID <<  "wait" << std::endl;
         }
     }
     else {
@@ -63,7 +61,6 @@ bool PCB::doneWaiting() {
 
 void PCB::setRamInfo(ramInfo info){
     ram = info;
-    return;
 }
 
 ramInfo PCB::getRamInfo() {

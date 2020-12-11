@@ -2,6 +2,8 @@
 #define DISK_H
 
 #include <vector>
+#include <string>
+#include <set>
 #include "processState.h"
 
 class Disk {
@@ -17,6 +19,8 @@ class Disk {
         requestInfo popCurrent();
         void moveHead();
         bool isIdle();
+        int getHead();
+        std::set<long long int> getProcesses();
 };
 
 #endif

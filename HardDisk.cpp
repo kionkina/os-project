@@ -68,9 +68,19 @@ void HardDisk::showBusy(){
     // Iterate till the end of set
     while (it != busyDisks.end())
         {
-        // Print the element
-        std::cout << (*it) << " , ";
+        const long long int diskNum = (*it);
+        Disk* currDisk = disks.at(diskNum);
+        std::set<long long int> processes = currDisk->getProcesses();
+
+        // Print disknum and current head
+        std::cout << "Disk " << diskNum << ": " << "Reads: " << currDisk->getHead() << " Serves: ";
+
+        for (auto process = processes.begin(); process != processes.end(); ++process) {
+            std::cout << ' ' << *process;   
+        };
         //Increment the iterator
+
+        std::cout << std::endl;
         it++;
     }
 
