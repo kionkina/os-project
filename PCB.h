@@ -19,6 +19,7 @@ class PCB {
         bool doneWaiting();
         void setRamInfo(ramInfo info);
         ramInfo getRamInfo();
+        ~PCB();
     
     private:
         processState currentState;

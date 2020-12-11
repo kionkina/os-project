@@ -232,11 +232,10 @@ void OperatingSystem::finishReading(const long long int &diskNum) {
 void OperatingSystem::terminate() {
 
     if (currentProcess != NULL) {
-        //TODO: make sure this works with deallocation
         currentProcess->setState(Terminated);
         memory->remove(currentProcess->getPID());
+        delete(currentProcess);
 
-        //TODO: deallocate PCB
         if (!RQ->isEmpty()) {
             currentProcess = RQ->getFront();
             

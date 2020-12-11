@@ -17,7 +17,7 @@ requestInfo Disk::popCurrent() {
     }
     requestInfo retPair = diskQueue[head];
 
-    // remove element from queue
+    //Remove element from queue
     diskQueue.erase(diskQueue.begin()+head);
     return retPair;
 }

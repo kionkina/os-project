@@ -70,3 +70,7 @@ ramInfo PCB::getRamInfo() {
 long long int PCB::getSize() {
     return size;
 }
+
+PCB::~PCB() {
+    std::cout << "Deleting " << "P" << PID << std::endl;
+}

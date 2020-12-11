@@ -45,7 +45,7 @@ PCB* ReadyQueue::popFront() {
     Node *temp = new Node;
     temp = head;
     head = head->next;
-    delete temp;
+    delete(temp);
 
     return front;
 
